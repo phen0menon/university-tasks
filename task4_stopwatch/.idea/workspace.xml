@@ -10,24 +10,16 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/task4_stopwatch$main.coverage" NAME="main Coverage Results" MODIFIED="1538485488271" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/task4_stopwatch$Doctest_Stopwatch_format.coverage" NAME="Doctests in main Coverage Results" MODIFIED="1538506193060" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/task4_stopwatch$main.coverage" NAME="main Coverage Results" MODIFIED="1538506084952" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="simpleguics2pygame.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/SimpleGUICS2Pygame/simpleguics2pygame.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="2757" column="8" selection-start-line="2757" selection-start-column="8" selection-end-line="2757" selection-end-column="8" />
+            <state relative-caret-position="418">
+              <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -92,7 +84,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python tests.Doctests in main">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="task4_stopwatch" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -112,9 +104,52 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="Doctest Stopwatch.format" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+      <module name="task4_stopwatch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="CLASS_NAME" value="Stopwatch" />
+      <option name="METHOD_NAME" value="format" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_METHOD" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+    </configuration>
+    <configuration name="Doctests in main" type="tests" factoryName="Doctests" temporary="true" nameIsGenerated="true">
+      <module name="task4_stopwatch" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="CLASS_NAME" value="Stopwatch" />
+      <option name="METHOD_NAME" value="format" />
+      <option name="FOLDER_NAME" value="" />
+      <option name="TEST_TYPE" value="TEST_SCRIPT" />
+      <option name="PATTERN" value="" />
+      <option name="USE_PATTERN" value="false" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python tests.Doctests in main" />
+      <item itemvalue="Python tests.Doctest Stopwatch.format" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python tests.Doctests in main" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python tests.Doctest Stopwatch.format" />
       </list>
     </recent_temporary>
   </component>
@@ -131,9 +166,40 @@
     </task>
     <servers />
   </component>
+  <component name="TestHistory">
+    <history-entry file="Doctest_Stopwatch_format - 2018.10.02 at 21h 05m 43s.xml">
+      <configuration name="Doctest Stopwatch.format" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctest_Stopwatch_format - 2018.10.02 at 21h 16m 39s.xml">
+      <configuration name="Doctest Stopwatch.format" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctest_Stopwatch_format - 2018.10.02 at 21h 17m 14s.xml">
+      <configuration name="Doctest Stopwatch.format" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctests_in_main - 2018.10.02 at 21h 22m 18s.xml">
+      <configuration name="Doctests in main" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctests_in_main - 2018.10.02 at 21h 23m 08s.xml">
+      <configuration name="Doctests in main" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctests_in_main - 2018.10.02 at 21h 24m 32s.xml">
+      <configuration name="Doctests in main" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctest_Stopwatch_format - 2018.10.02 at 21h 25m 29s.xml">
+      <configuration name="Doctest Stopwatch.format" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctest_Stopwatch_format - 2018.10.02 at 21h 26m 15s.xml">
+      <configuration name="Doctest Stopwatch.format" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctest_Stopwatch_format - 2018.10.02 at 21h 29m 15s.xml">
+      <configuration name="Doctest Stopwatch.format" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Doctests_in_main - 2018.10.02 at 21h 49m 54s.xml">
+      <configuration name="Doctests in main" configurationId="tests" />
+    </history-entry>
+  </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1753" height="993" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
@@ -148,7 +214,7 @@
       <window_info anchor="right" id="SciView" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39954853" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -174,8 +240,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="21" column="37" lean-forward="true" selection-start-line="21" selection-start-column="37" selection-end-line="21" selection-end-column="37" />
+        <state relative-caret-position="418">
+          <caret line="22" column="37" lean-forward="true" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
         </state>
       </provider>
     </entry>
