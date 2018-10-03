@@ -21,7 +21,7 @@ class Stopwatch(object):
         self.frame.add_button("Magic Stop!", self.stopwatch_guess)
 
     def draw(self, canvas):
-        canvas.draw_text(self.format(), [self.CANVAS_WIDTH / 2, self.CANVAS_HEIGHT / 2], 18, 'white')
+        canvas.draw_text(self.stopwatch_format(self.time), [self.CANVAS_WIDTH / 2, self.CANVAS_HEIGHT / 2], 18, 'white')
         canvas.draw_text(
             str(self.true_stop_count) + " / " + str(self.stop_count),
             [self.CANVAS_WIDTH - 50, 20], 18, 'white')
@@ -29,8 +29,18 @@ class Stopwatch(object):
     def stopwatch_change_state(self):
         self.time += self.STOPWATCH_TICKRATE
 
-    def format(self):
-        timestamp = self.time / 10
+    def stopwatch_format(self, time):
+        """
+        >>> Stopwatch.stopwatch_format(Stopwatch, 0 * Stopwatch.STOPWATCH_TICKRATE)
+        '0:00.0'
+        >>> Stopwatch.stopwatch_format(Stopwatch, 11 * Stopwatch.STOPWATCH_TICKRATE)
+        '0:01.1'
+        >>> Stopwatch.stopwatch_format(Stopwatch, 321 * Stopwatch.STOPWATCH_TICKRATE)
+        '0:32.1'
+        >>> Stopwatch.stopwatch_format(Stopwatch, 613 * Stopwatch.STOPWATCH_TICKRATE)
+        '1:01.3'
+        """
+        timestamp = time / 10
 
         minutes = str(int(timestamp // (self.STOPWATCH_TICKRATE * 60)))
         seconds = str(timestamp % (self.STOPWATCH_TICKRATE * 60) / self.STOPWATCH_TICKRATE)
@@ -38,7 +48,7 @@ class Stopwatch(object):
         if int(float(seconds)) < 10:
             seconds = '0' + seconds[0:]
 
-        return minutes + ":" + seconds
+        return "{}:{}".format(minutes, seconds)
 
     def stopwatch_toggle(self):
         if self.stopwatch_timer.is_running():
@@ -67,5 +77,7 @@ def main():
     stopwatch = Stopwatch()
     stopwatch.run()
 
-if __name__ == '__main__':
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod(extraglobs={'obj': Stopwatch()})
     main()
