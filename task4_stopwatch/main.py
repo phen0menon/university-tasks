@@ -5,6 +5,8 @@ class Stopwatch(object):
     CANVAS_WIDTH = 500
     CANVAS_HEIGHT = 500
 
+    true_stop_count = 0
+    stop_count = 0
     time = 0
 
     stopwatch_timer = None
@@ -16,9 +18,13 @@ class Stopwatch(object):
         self.frame.set_draw_handler(self.draw)
         self.frame.add_button("Toggle", self.stopwatch_toggle)
         self.frame.add_button("Reset", self.stopwatch_reset)
+        self.frame.add_button("Magic Stop!", self.stopwatch_guess)
 
     def draw(self, canvas):
         canvas.draw_text(self.format(), [self.CANVAS_WIDTH / 2, self.CANVAS_HEIGHT / 2], 18, 'white')
+        canvas.draw_text(
+            str(self.true_stop_count) + " / " + str(self.stop_count),
+            [self.CANVAS_WIDTH - 50, 20], 18, 'white')
 
     def stopwatch_change_state(self):
         self.time += self.STOPWATCH_TICKRATE
@@ -40,10 +46,19 @@ class Stopwatch(object):
         else:
             self.stopwatch_timer.start()
 
+    def stopwatch_guess(self):
+        if self.stopwatch_timer.is_running():
+            self.stop_count += 1
+            if self.time % 1000 == 0:
+                self.true_stop_count += 1
+
     def stopwatch_reset(self):
         if self.stopwatch_timer.is_running():
             self.stopwatch_timer.stop()
+
         self.time = 0
+        self.stop_count = 0
+        self.true_stop_count = 0
 
     def run(self):
         self.frame.start()
