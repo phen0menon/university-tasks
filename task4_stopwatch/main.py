@@ -1,11 +1,12 @@
 import SimpleGUICS2Pygame.simpleguics2pygame as simplegui
 
+
 class Stopwatch(object):
     STOPWATCH_TICKRATE = 100
     CANVAS_WIDTH = 500
     CANVAS_HEIGHT = 500
 
-    true_stop_count = 0
+    magic_points = 0
     stop_count = 0
     time = 0
 
@@ -21,9 +22,11 @@ class Stopwatch(object):
         self.frame.add_button("Magic Stop!", self.stopwatch_guess)
 
     def draw(self, canvas):
-        canvas.draw_text(self.stopwatch_format(self.time), [self.CANVAS_WIDTH / 2, self.CANVAS_HEIGHT / 2], 18, 'white')
         canvas.draw_text(
-            str(self.true_stop_count) + " / " + str(self.stop_count),
+            self.stopwatch_format(self.time),
+            [self.CANVAS_WIDTH / 2, self.CANVAS_HEIGHT / 2], 18, 'white')
+        canvas.draw_text(
+            str(self.magic_points) + " / " + str(self.stop_count),
             [self.CANVAS_WIDTH - 50, 20], 18, 'white')
 
     def stopwatch_change_state(self):
@@ -60,7 +63,7 @@ class Stopwatch(object):
         if self.stopwatch_timer.is_running():
             self.stop_count += 1
             if self.time % 1000 == 0:
-                self.true_stop_count += 1
+                self.magic_points += 1
 
     def stopwatch_reset(self):
         if self.stopwatch_timer.is_running():
@@ -68,16 +71,19 @@ class Stopwatch(object):
 
         self.time = 0
         self.stop_count = 0
-        self.true_stop_count = 0
+        self.magic_points = 0
 
     def run(self):
         self.frame.start()
+
 
 def main():
     stopwatch = Stopwatch()
     stopwatch.run()
 
+
 if __name__ == "__main__":
     import doctest
+
     doctest.testmod(verbose=True)
     main()
