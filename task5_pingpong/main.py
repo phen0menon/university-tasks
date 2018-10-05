@@ -117,7 +117,8 @@ class Game(object):
         self.ball_pos[1] += self.ball_vel['y']
 
         if (self.ball_pos[0] <= self.BALL_RADIUS):
-            if (self.ball_pos[1] <= self.paddles['left']['position']['end']['y'] and self.ball_pos[1] > self.paddles['left']['position']['start']['y']):
+            if (self.ball_pos[1] <= self.paddles['left']['position']['end']['y']
+                    and self.ball_pos[1] > self.paddles['left']['position']['start']['y']):
                 self.ball_vel['x'] *= -1
                 self.increase_ball_velocity()
             else:
@@ -125,7 +126,8 @@ class Game(object):
                 self.change_ball_direction('right')
 
         elif (self.ball_pos[0] >= self.CANVAS_WIDTH - self.BALL_RADIUS - 1):
-            if (self.ball_pos[1] <= self.paddles['right']['position']['end']['y'] and self.ball_pos[1] > self.paddles['right']['position']['start']['y']):
+            if (self.ball_pos[1] <= self.paddles['right']['position']['end']['y']
+                    and self.ball_pos[1] > self.paddles['right']['position']['start']['y']):
                 self.ball_vel['x'] *= -1
             else:
                 self.reset_ball_state()
