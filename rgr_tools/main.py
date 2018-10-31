@@ -23,9 +23,9 @@ class File(object):
                 """
                 Если файл ищется в локальной директории (директория, где запущен скрипт)
                 """
-                
+
                 dir_path = dirname(abspath(__file__))
-                print("Доступные файлы в текущей директории:\n", [f for f in listdir(dir_path) if isfile(join(dir_path, f))])
+                print("Доступные файлы в текущей директории:\n", [f for f in listdir(dir_path) if isfile(join(dir_path, f))], sep='')
 
     def get_chars_dictionary(self):
         self.letters = dict()
