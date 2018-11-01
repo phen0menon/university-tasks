@@ -5,17 +5,15 @@ from os.path import *
 import io
 
 
-class File(object):
+class Parser(object):
     content = None
 
     def __init__(self, filename):
         try:
             with io.open(filename, 'r', encoding='utf8') as content_file:
-                self.content = content_file.read()
+                self.content = content_file.read().strip()
             
-            self.ALPHABET = [chr(i) for i in range(ord('а'), ord('я') + 1)]
-            self.ALPHABET.extend([' ', ',', '-', '_', '?', '"', ':', '!', ';'])
-            self.ALPHABET.extend(str(i) for i in range(0, 10))
+            self.alphabet = list(set(self.content))
         except FileNotFoundError:
             print("Файл не найден!")
 
@@ -30,7 +28,7 @@ class File(object):
     def get_chars_dictionary(self):
         self.letters = dict()
 
-        for letter in self.ALPHABET:
+        for letter in self.alphabet:
             self.letters[letter] = self.content.count(letter)
 
         self.dictionary = dict(sorted(self.letters.items(), key=lambda kv: kv[1], reverse=True))
@@ -40,24 +38,23 @@ class File(object):
             self.get_chars_dictionary()
 
             net_length = sum(self.dictionary.values())
-            
-            print("Символ   Повторения    Вероятность")
-            for idx in self.dictionary.keys():
-                current_symbol = self.dictionary[idx]
-                probability = '{:.7f}'.format(round(current_symbol / net_length, 7))
 
-                if idx == ' ':
-                    print('пробел' + '%+8s' % str(current_symbol) + '%+18s' % str(probability))
-                else: print(idx + '%+13s' % str(current_symbol) + '%+18s' % str(probability))              
+            for idx in self.dictionary.keys():
+                occurency = self.dictionary[idx]
+                probability = '{:.7f}'.format(round(occurency / net_length, 7))
+                chance = '{:.2f}%'.format((float(probability) * 100))
+
+                if idx == ' ': print('пробел' + '%+8s' % str(occurency) + '%+18s' % str(probability) + '%+14s' % str(chance))
+                elif idx != '\n': print(idx + '%+13s' % str(occurency) + '%+18s' % str(probability) + '%+14s' % str(chance))              
 
 
 def main():
-    parser = ArgumentParser()
-    parser.add_argument("-f", "--file", dest="filename", help="Read some .txt-file and find repeat probability of each symbol")
-    args = parser.parse_args()
+    argparser = ArgumentParser()
+    argparser.add_argument("-f", "--file", dest="filename", help="Read some .txt-file and find repeat probability of each symbol")
+    args = argparser.parse_args()
 
-    file = File(args.filename)
-    file.get_chars()
+    file_parser = Parser(args.filename)
+    file_parser.get_chars()
 
 if __name__ == '__main__':
     main()
