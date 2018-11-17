@@ -11,6 +11,7 @@ class Parser(object):
         with io.open(filename, 'r', encoding='utf8') as content_file:
             self.content = content_file.read().strip().lower()
 
+        self.huffman_values = dict()
         self.alphabet = list(set(self.content))
         self.letters = {letter: self.content.count(letter) for letter in self.alphabet}
         self.dictionary = dict(sorted(self.letters.items(), key=lambda kv: kv[1], reverse=True))
@@ -32,15 +33,14 @@ class Parser(object):
 
                     print(idx.upper() + print_field)
 
-
-    def sort_tree(self, vertex):
+    def sort_tree_key(self, vertex):
         return vertex[0][1]
 
     def huffman_encode(self, tree):
         if len(tree) <= 1:
             return tree
 
-        tree.sort(key=self.sort_tree)
+        tree.sort(key=self.sort_tree_key)
 
         left_son, right_son = tree[0], tree[1]
         left_son[3], right_son[3] = "0", "1"
@@ -78,9 +78,16 @@ class Parser(object):
         self.get_huffman_encoding(self.probabilities)
 
         for edge in self.probabilities:
-            code_length += edge[0][1] * len(str(self.get_huffman_tree_value(edge)))
+            code_length = code_length + edge[0][1] * len(str(self.get_huffman_tree_value(edge)))
 
-        return round(code_length, 7)
+        return round(code_length, 8)
+
+    def get_encoded_text_length(self):
+        return self.get_huffman_code_length() * self.get_symbols_count()
+
+    def get_huffman_values(self):
+        for edge in self.probabilities:
+            print(edge[0][0], '\t', self.get_huffman_tree_value(edge))
 
     def get_symbols_count(self):
         return len(self.content)
@@ -89,7 +96,7 @@ class Parser(object):
         return len(self.alphabet)
 
     def get_hartley_entropy(self):
-        return logarithm(self.get_unique_symbols_count())
+        return round(logarithm(self.get_unique_symbols_count()), 7)
 
     def get_hartley_inf_amount(self):
         return self.get_hartley_entropy() * self.get_symbols_count()
@@ -103,19 +110,37 @@ class Parser(object):
             entropy += letter_occurrence / self.get_symbols_count() * logarithm(
                 1 / (letter_occurrence / self.get_symbols_count()))
 
-        return entropy
+        return round(entropy, 7)
 
     def get_shannon_inf_amount(self):
         return self.get_shannon_entropy() * self.get_symbols_count()
 
+    def get_code_redundancy(self):
+        return (self.get_huffman_code_length() - self.get_shannon_entropy()) / self.get_shannon_entropy()
+
+    def get_default_size(self):
+        return self.get_symbols_count() * 8
+
+    def get_encoded_size(self):
+        return self.get_huffman_code_length() * self.get_symbols_count()
+
+    def get_compression_coefficient(self):
+        return "{}%".format(round(self.get_encoded_size() / self.get_default_size(), 3) * 100)
+
     def print_informatics_data(self):
-        print("\nLength of symbols is", self.get_symbols_count())
-        print("Length of alphabet is", self.get_unique_symbols_count())
+        print("\nText length is", self.get_symbols_count())
+        print("Alphabet length is", self.get_unique_symbols_count())
         print("Hartley entropy is", self.get_hartley_entropy())
         print("Hartley info amount is", self.get_hartley_inf_amount())
         print("Shannon entropy is", self.get_shannon_entropy())
         print("Shannon info amount is", self.get_shannon_inf_amount())
+        print("Minimal code length is", self.get_shannon_entropy())
         print("Optimal Huffman's length of code is", self.get_huffman_code_length())
+        print("Size of encoded text is", self.get_encoded_text_length())
+        print("Code redundancy is", self.get_code_redundancy())
+        print("Compression coefficient is", self.get_compression_coefficient())
+        print("Huffman's tree values are:\n")
+        self.get_huffman_values()
 
 
 def main():
