@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
+
 from math import log2 as logarithm
 
 import io
-
 
 class Parser(object):
     probabilities = []
@@ -13,25 +14,31 @@ class Parser(object):
 
         self.huffman_values = dict()
         self.alphabet = list(set(self.content))
-        self.letters = {letter: self.content.count(letter) for letter in self.alphabet}
+        self.letters = {letter: self.content.count(letter) for letter in self.alphabet if letter != '\n'}
         self.dictionary = dict(sorted(self.letters.items(), key=lambda kv: kv[1], reverse=True))
+
+    def filter_chars(self):
+        for letter in list(self.dictionary.keys()):
+            if letter == '\n':
+                del(self.dictionary[letter])
+
 
     def get_chars(self):
         if self.content:
+            # self.filter_chars()
+
             net_length = sum(self.dictionary.values())
 
-            for idx in self.dictionary.keys():
-                if idx != '\n':
-                    occurrence = self.dictionary[idx]
+            for index, ltr in enumerate(self.dictionary.keys(), start=1):
+                occurrence = self.dictionary[ltr]
 
-                    probability = '{:.7f}'.format(round(occurrence / net_length, 7))
-                    chance = '{:.2f}%'.format((float(probability) * 100))
+                probability = '{:.7f}'.format(round(occurrence / net_length, 7))
+                chance = '{:.2f}%'.format((float(probability) * 100))
 
-                    print_field = "\t{} {} {}".format(str(occurrence), str(probability), str(chance))
+                self.probabilities.append([(ltr, float(probability)), [], None, ""])
 
-                    self.probabilities.append([(idx, float(probability)), [], None, ""])
-
-                    print(idx.upper() + print_field)
+                print_field = "\t{}\t{}\t{}\t{}".format(ltr.upper(), str(occurrence), str(probability), str(chance))
+                print(str(index) + print_field)
 
     def sort_tree_key(self, vertex):
         return vertex[0][1]
@@ -89,11 +96,12 @@ class Parser(object):
         for edge in self.probabilities:
             print(edge[0][0], '\t', self.get_huffman_tree_value(edge))
 
+
     def get_symbols_count(self):
         return len(self.content)
 
     def get_unique_symbols_count(self):
-        return len(self.alphabet)
+        return len(self.letters)
 
     def get_hartley_entropy(self):
         return round(logarithm(self.get_unique_symbols_count()), 7)
@@ -116,7 +124,7 @@ class Parser(object):
         return self.get_shannon_entropy() * self.get_symbols_count()
 
     def get_code_redundancy(self):
-        return (self.get_huffman_code_length() - self.get_shannon_entropy()) / self.get_shannon_entropy()
+        return round((self.get_huffman_code_length() - self.get_shannon_entropy()) / self.get_shannon_entropy(), 3)
 
     def get_default_size(self):
         return self.get_symbols_count() * 8
@@ -125,7 +133,7 @@ class Parser(object):
         return self.get_huffman_code_length() * self.get_symbols_count()
 
     def get_compression_coefficient(self):
-        return "{}%".format(round(self.get_encoded_size() / self.get_default_size(), 3) * 100)
+        return "{}%".format(round(self.get_encoded_size() / self.get_default_size() * 100), 3)
 
     def print_informatics_data(self):
         print("\nText length is", self.get_symbols_count())
