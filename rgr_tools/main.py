@@ -17,16 +17,8 @@ class Parser(object):
         self.letters = {letter: self.content.count(letter) for letter in self.alphabet if letter != '\n'}
         self.dictionary = dict(sorted(self.letters.items(), key=lambda kv: kv[1], reverse=True))
 
-    def filter_chars(self):
-        for letter in list(self.dictionary.keys()):
-            if letter == '\n':
-                del(self.dictionary[letter])
-
-
     def get_chars(self):
         if self.content:
-            # self.filter_chars()
-
             net_length = sum(self.dictionary.values())
 
             for index, ltr in enumerate(self.dictionary.keys(), start=1):
