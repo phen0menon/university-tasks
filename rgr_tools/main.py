@@ -125,7 +125,7 @@ class Parser(object):
         return self.get_huffman_code_length() * self.get_symbols_count()
 
     def get_compression_coefficient(self):
-        return "{}%".format(round(self.get_encoded_size() / self.get_default_size() * 100), 3)
+        return "{}%".format(round((self.get_default_size() / self.get_encoded_size() * 100) - 100), 3)
 
     def print_informatics_data(self):
         print("\nText length is", self.get_symbols_count())
@@ -144,7 +144,7 @@ class Parser(object):
 
 
 def main():
-    path_to_file = "txt.txt"
+    path_to_file = "nikita.txt"
 
     file_parser = Parser(path_to_file)
     file_parser.get_chars()
