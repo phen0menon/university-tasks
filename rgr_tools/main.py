@@ -3,6 +3,7 @@
 from math import log2 as logarithm
 
 import io
+import time
 
 class Parser(object):
     probabilities = []
@@ -142,8 +143,19 @@ class Parser(object):
         print("Huffman's tree values are:\n")
         self.get_huffman_values()
 
+def timeit(method):
+    def timed(*args, **kw):
+        start = time.time()
+        result = method(*args, **kw)
+        end = time.time()
 
-def main():
+        print ('\nDuration: %2.2f s' % (end - start))
+        return result
+
+    return timed
+
+@timeit
+def main(**kwargs):
     path_to_file = "txt.txt"
 
     file_parser = Parser(path_to_file)
