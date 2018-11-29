@@ -85,8 +85,8 @@ class Parser(object):
         return self.get_huffman_code_length() * self.get_symbols_count()
 
     def get_huffman_values(self):
-        for edge in self.probabilities:
-            print(edge[0][0], '\t', self.get_huffman_tree_value(edge))
+        for index, edge in enumerate(self.probabilities, start=1):
+            print(index, '\t', edge[0][0], '\t', self.get_huffman_tree_value(edge))
 
 
     def get_symbols_count(self):
@@ -144,7 +144,7 @@ class Parser(object):
 
 
 def main():
-    path_to_file = "nikita.txt"
+    path_to_file = "txt.txt"
 
     file_parser = Parser(path_to_file)
     file_parser.get_chars()
