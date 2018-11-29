@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+"""
+Author: Rolan Ibragimov (https://github.com/phen0menon/)
+"""
+
 from math import log2 as logarithm
 
 import io
