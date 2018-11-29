@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Author: Rolan Ibragimov (https://github.com/phen0menon/)
+Author: Roland Ibragimov (https://github.com/phen0menon/)
 """
 
 from math import log2 as logarithm
