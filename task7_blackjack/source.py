@@ -5,25 +5,25 @@ import random
 class Strings:
     GAME_TITLE = "Blackjack"
 
-    HAND_CONTAINS = "Hand contains"
-    DECK_CONTAINS = "Deck contains"
-    HIT_OR_STAND = "Hit or stand?"
+    HAND_CONTAINS = "Hand is"
+    DECK_CONTAINS = "Deck is"
+    HIT_OR_STAND = "Hit or Stand?"
 
     PLAYER_LOST_RESTART = "Player lost because of restart"
 
-    PLAYER = "Player: %s"
-    COMPUTER = "Computer: %s"
+    PLAYER = "Player's %s"
+    COMPUTER = "Computer's %s"
 
-    BUSTED = "You have busted"
-    COMPUTER_BUSTED = "Computer busted"
-    COMPUTER_BUSTED_STATUS = "Computer is busted. You won"
+    BUSTED = "You got overflow"
+    COMPUTER_BUSTED = "Computer got overflow"
+    COMPUTER_BUSTED_STATUS = "Computer got overflow. You won"
 
-    COMPUTER_WON = "Computer wins"
+    COMPUTER_WON = "Computer won"
     PLAYER_WON = "You won!"
 
-    HIT = "hit"
-    DEAL = "deal"
-    STAND = "stand"
+    HIT = "HIT"
+    DEAL = "DEAL"
+    STAND = "STAND"
 
 
 class Constants:
@@ -37,11 +37,11 @@ class Constants:
     # Initialize cards
     card_size = (73, 98)
     card_center = (36.5, 49)
-    card_images = simplegui.load_image("http://commondatastorage.googleapis.com/codeskulptor-assets/cards.jfitz.png")
+    card_images = simplegui.load_image("https://i.imgur.com/uyt66L6.png")
 
     card_back_size = (71, 96)
     card_back_center = (35.5, 48)
-    card_back = simplegui.load_image("http://commondatastorage.googleapis.com/codeskulptor-assets/card_back.png")
+    card_back = simplegui.load_image("https://i.imgur.com/nquI3Nb.png")
 
     suits = ('C', 'S', 'H', 'D')
     ranks = ('A', '2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K')
@@ -132,11 +132,7 @@ class Game(Constants):
         self.computer_score = 0
 
     def deal(self):
-        if self.game_is_active:
-            self.output = Strings.PLAYER_LOST_RESTART
-            self.computer_score += 1
-            self.game_is_active = False
-        else:
+        if not self.game_is_active:
             self.deck = Deck()
             self.deck.shuffle()
 
@@ -152,6 +148,10 @@ class Game(Constants):
             print(Strings.COMPUTER % self.dealer_hand)
 
             self.game_is_active = True
+        else:
+            self.computer_score += 1
+            self.game_is_active = False
+            self.output = Strings.PLAYER_LOST_RESTART
 
     def hit(self):
         if self.game_is_active:
@@ -194,14 +194,14 @@ class Game(Constants):
         self.player_hand.draw(canvas, [10, 375])
         self.dealer_hand.draw(canvas, [10, 195])
 
-        canvas.draw_text(self.output, [10, 100], 30, "pink")
+        canvas.draw_text(self.output, [10, 100], 30, "red")
 
         canvas.draw_text(Strings.COMPUTER % self.computer_score, [10, 175], 20, "grey")
         canvas.draw_text(Strings.PLAYER % self.player_score, [10, 350], 20, "grey")
 
         if self.game_is_active:
-            canvas.draw_image(self.card_back, self.card_back_center, self.card_back_size, (46, 244),
-                              self.card_back_size)
+            canvas.draw_image(self.card_back, self.card_back_center, self.card_back_size,
+                              (46, 244), self.card_back_size)
 
 
 class Interface:
@@ -229,3 +229,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
