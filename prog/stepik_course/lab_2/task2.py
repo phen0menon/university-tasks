@@ -24,4 +24,4 @@ if __name__ == "__main__":
   inputs = input().split(" ")
 
   assoc_table = {"0": "A", "1": "C", "2": "G", "3": "T"}
-  print(*[assoc_table[j] for j in convert(list(str(int2base(int(inputs[0]), 4))), int(inputs[1]))], sep='')
+  print(*[assoc_table[j] for j in convert(list(int2base(int(inputs[0]), len(assoc_table))), int(inputs[1]))], sep='')
