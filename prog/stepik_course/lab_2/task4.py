@@ -21,7 +21,6 @@ def find_occurrencies():
 	k = int(input())
 
 	words = Counter(text[i:i+k] for i in range(len(text) - k + 1)).most_common()
-
 	print(" ".join(sorted([word[0] for word in words if word[1] == words[0][1]])))
 
 if __name__ == "__main__":

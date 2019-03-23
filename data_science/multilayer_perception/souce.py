@@ -1,11 +1,14 @@
 import numpy as np
 from numpy import dot
 
+
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
+
 def append_vector(vector):
     return np.concatenate((vector, [[1]]), axis=1)
+
 
 class Layer:
     def __init__(self, number_of_inputs_neuron, number_of_neurons):
@@ -16,10 +19,10 @@ class Layer:
 
 
 class Network:
-    current_vector = None
-
     def __init__(self, layers):
+        self.inputs = None
         self.layers = layers
+        self.current_vector = None
 
     def set_input(self, inputs):
         self.inputs = inputs
@@ -40,7 +43,7 @@ class Network:
         for index, layer in enumerate(self.layers):
             next_vector = sigmoid(dot(self.current_vector, layer.get_weights()))
 
-            if (index != len(self.layers) - 1):
+            if index != len(self.layers) - 1:
                 next_vector = append_vector(next_vector)
 
             self.current_vector = next_vector
@@ -49,6 +52,7 @@ class Network:
 
 def generate_vector(length):
     return append_vector(2 * np.random.random((1, length)) - 1)
+
 
 if __name__ == "__main__":
     first_neuron_length = 4
