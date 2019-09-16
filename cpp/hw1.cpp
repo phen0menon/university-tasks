@@ -71,7 +71,7 @@ void execMenu() {
 
 	auto fn = getUserChoiceHandler(userChoice);
 	if (fn == nullptr) {
-		std::cout << "Not found choice for " << userChoice << " case\n";
+		std::cout << "Not found handler for case " << userChoice << " case\n";
 	}
 	else {
 		fn(input);
