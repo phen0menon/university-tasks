@@ -2,12 +2,6 @@
 #include <memory>
 
 template<typename Derived, typename Base, typename Del>
-std::unique_ptr<Derived, Del> static_unique_ptr_cast(std::unique_ptr<Base, Del>&& ptr) {
-	auto casted_derived = static_cast<Derived *>(ptr.release());
-	return std::unique_ptr<Derived, Del>(casted_derived, std::move(ptr.get_deleter()));
-}
-
-template<typename Derived, typename Base, typename Del>
 std::unique_ptr<Derived, Del> dynamic_unique_ptr_cast(std::unique_ptr<Base, Del>&& ptr) {
 	if (Derived *result = dynamic_cast<Derived *>(ptr.get())) {
 		ptr.release();
@@ -48,7 +42,7 @@ int main() {
 	std::unique_ptr<Base> base = std::move(derived);
 	base->getTitle();
 
-	auto derived_copy = static_unique_ptr_cast<Derived>(std::move(base));
+	auto derived_copy =	dynamic_unique_ptr_cast<Derived>(std::move(base));
 	derived_copy->getTitle();
 
 	std::unique_ptr<Base> base_copy = std::make_unique<Derived>("0xCCC");
