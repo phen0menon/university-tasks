@@ -2,7 +2,9 @@
 #include <iostream>
 #include <string>
 #include <cstring>
+#include <sstream>
 
+// Task 1 ~ 2
 std::string fromDecimal(int num, int base) {
   // if either base or num is invalid, return 0
   if (base < 2 || base > 36 || num == 0) {
@@ -53,8 +55,38 @@ void testDecimal() {
 }
 
 
+// Task 3
+void printVector(std::vector<std::string> arr) {
+  for (auto it = arr.begin(); it < arr.end(); ++it)
+    std::cout << *it << std::endl;
+}
+
+std::vector<std::string> split(const std::string &str, char delimiter) {
+  std::vector<std::string> out;
+  std::istringstream iss(str);
+  std::string token;
+  while (std::getline(iss, token, ' ')) {
+    out.push_back(token);
+  }
+  return out;
+}
+
+// Task 4
+void swap(int& a, int& b) {
+  int t = a;
+  a = b;
+  b = t;
+}
+
+void sortIntegers(std::vector<int> &vec) {
+  for (int i = 0; i < vec.size(); i++) {
+    for (int j = 0; j < vec.size() - i - 1; j++) {
+      if (vec[j] > vec[j + 1]) 
+        swap(vec[j], vec[j + 1]);
+    }
+  }
+}
 
 int main() {
-
   return 0;
 }
