@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Dev/cpp-homework/DateConverter_lib/Gregorian.cpp
+Gregorian.h
+C:/Dev/cpp-homework/DateConverter_lib/Gregorian.h
+
+C:/Dev/cpp-homework/DateConverter_lib/Gregorian.h
+
+C:/Dev/cpp-homework/DateConverter_lib/Julian.cpp
+Julian.h
+C:/Dev/cpp-homework/DateConverter_lib/Julian.h
+
+C:/Dev/cpp-homework/DateConverter_lib/Julian.h
+
