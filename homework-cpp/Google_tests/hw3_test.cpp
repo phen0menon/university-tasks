@@ -17,23 +17,23 @@ TEST(HomeWork3, TestFromDecimal) {
 
 
 TEST(HomeWork3, TestStringSplit) {
-    typedef std::vector<std::string> strArr;
+    typedef std::vector<std::string> collection;
 
     {
         std::string example = "f g f";
-        strArr rightAns = { "f", "g", "f" };
+        collection rightAns = { "f", "g", "f" };
         EXPECT_EQ(rightAns, split(example, ' '));
     }
 
     {
         std::string example = "dab";
-        strArr rightAns = { "d", "b" };
+        collection rightAns = { "d", "b" };
         EXPECT_EQ(rightAns, split(example, 'a'));
     }
 
     {
         std::string example = "a-b-c";
-        strArr rightAns = { "a", "b", "c" };
+        collection rightAns = { "a", "b", "c" };
         EXPECT_EQ(rightAns, split(example, '-'));
     }
 }
@@ -49,18 +49,18 @@ TEST(HomeWork3, TestSwapIntegers) {
 }
 
 TEST(HomeWork3, TestBubbleSortUsingReferencableSwap) {
-    typedef std::vector<int> intArr;
+    typedef std::vector<int> collection;
 
     {
-        intArr example = {9, 8, 7, 6, 5};
-        intArr rightAns = {5, 6, 7, 8, 9};
+        collection example = {9, 8, 7, 6, 5};
+        collection rightAns = {5, 6, 7, 8, 9};
         sortIntegers(example);
         EXPECT_EQ(example, rightAns);
     }
 
     {
-        intArr example = {100, 90, 1};
-        intArr rightAns = {1, 90, 100};
+        collection example = {100, 90, 1};
+        collection rightAns = {1, 90, 100};
         sortIntegers(example);
         EXPECT_EQ(example, rightAns);
     }

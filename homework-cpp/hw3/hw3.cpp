@@ -2,7 +2,6 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include <cstring>
 #include <sstream>
 
 
@@ -17,7 +16,7 @@ std::string fromDecimal(int num, int base) {
 
     std::string out;
     while (num > 0) {
-        char digit = num % base;
+        char digit = static_cast<char>(num % base);
         digit += digit < 10 ? '0' : 'A' - 10;
         out += digit;
         num /= base;
@@ -34,8 +33,8 @@ int toDecimal(const std::string& num, int base) {
 
     int out = 0;
     for (int i = num.length() - 1, digValue = 1; i >= 0; --i, digValue *= base) {
-        char s = static_cast<unsigned char>(std::toupper(num[i]));
-        char nextDig = isdigit(s) ? s - '0' : s - 'A' + 10;
+        char s = static_cast<char>(std::toupper(num[i]));
+        char nextDig = static_cast<char>(isdigit(s) ? s - '0' : s - 'A' + 10);
 
         if (nextDig >= base) {
             return 0;

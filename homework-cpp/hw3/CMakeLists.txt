@@ -1,4 +1,4 @@
-project(DateConverter)
+project(hw3)
 
 set(HEADER_FILES hw3.h)
 set(SOURCE_FILES hw3.cpp)
