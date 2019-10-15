@@ -53,13 +53,18 @@ private:
   std::string _str;
 
 public:
-  friend std::ostream& operator << (std::ostream &out, const Token &t);
+  friend std::ostream &operator<<(std::ostream &out, const Token &t);
+
   static const std::unordered_map<LexemType, std::string> tokenRepresentationDict;
+
   std::string toString() const;
 
-  Token(LexemType type, const std::string& str);
+  Token(LexemType type, const std::string &str);
+
   Token(LexemType type);
+
   Token(int value);
+
   Token(char c);
 
   LexemType getType() {
