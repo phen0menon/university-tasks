@@ -48,17 +48,19 @@ enum class LexemType {
 
 class Token {
 private:
-  LexemType _type;
   int _value;
+  LexemType _type;
   std::string _str;
+
 public:
+  friend std::ostream& operator << (std::ostream &out, const Token &t);
+  static const std::unordered_map<LexemType, std::string> tokenRepresentationDict;
+  std::string toString() const;
+
   Token(LexemType type, const std::string& str);
   Token(LexemType type);
   Token(int value);
   Token(char c);
-
-  std::string toString();
-  void print(std::ostream &ostream);
 
   LexemType getType() {
     return this->_type;
