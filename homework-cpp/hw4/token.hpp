@@ -67,15 +67,15 @@ public:
 
   Token(char c);
 
-  LexemType getType() {
+  inline LexemType getType() {
     return this->_type;
   }
 
-  int getValue() {
+  inline int getValue() {
     return this->_value;
   }
 
-  std::string getStr() {
+  inline std::string getStr() {
     return this->_str;
   }
 };
