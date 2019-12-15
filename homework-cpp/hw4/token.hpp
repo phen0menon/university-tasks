@@ -67,6 +67,8 @@ public:
 
   Token(char c);
 
+  Token();
+
   inline LexemType getType() {
     return this->_type;
   }

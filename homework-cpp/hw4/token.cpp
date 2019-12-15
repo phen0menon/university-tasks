@@ -43,6 +43,11 @@ const std::unordered_map<LexemType, std::string> Token::tokenRepresentationDict{
 };
 
 /**
+ * Constructor by default
+ */
+Token::Token() : _type(LexemType::ERROR) {}
+
+/**
  * Constructor that implies using for lexems without parameters
  * @param type Lexem Type
  */
@@ -74,18 +79,26 @@ Token::Token(char c) : _value(c), _type(LexemType::CHR) {}
  */
 std::string Token::toString() const {
   const auto iterator = tokenRepresentationDict.find(_type);
-  if (_type == LexemType::CHR) {
-    return "[" + iterator->second + ", '" +
-           std::string(1, static_cast<char>(_value)) + "']";
-  } else if (_type == LexemType::NUM) {
+  if (_type == LexemType::NUM) {
     return "[" + iterator->second + ", " + std::to_string(_value) + "]";
+  } else if (_type == LexemType::CHR) {
+    return "[" + iterator->second + ", '" + _str + "']";
+  } else if (_type == LexemType::EOFF) {
+    return "[" + iterator->second + "]";
+  } else if (_type == LexemType::ID) {
+    return "[" + iterator->second + ", " + "\"" + _str + "\"" + "]";
+  } else if (_type != LexemType::ERROR) {
+    if (!_str.empty()) {
+      return "[" + iterator->second + ", " + "\"" + _str + "\"" + "]";
+    } else {
+      return "[" + iterator->second + "]";
+    }
   }
-  return "[" + iterator->second + ", \"" + _str + "\"]";
 }
 
 /**
  * Overridden operator << for printing out a lexem.
- * The printing format is declared in Token::toString()
+ * The printing format is declared at Token::toString()
  * @param out Ostream instance
  * @param t Token instance
  * @return Ostream instance for further expressions
