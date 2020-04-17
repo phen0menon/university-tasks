@@ -72,15 +72,11 @@ bool Grammar::loadGrammar(std::ifstream stream) {
         std::string word = it->first;
         auto rightGrammars = it->second;
         for (const auto& s : rightGrammars) {
-            std::cout << word << " -> ";
             for (const auto& _s : s) {
-                std::cout << _s << " ";
-
                 if (grammar.find(_s) != grammar.end() && _s != "e") {
                     notTerminals.insert(_s);
                 }
             }
-            std::cout << "\n";
         }
         it++;
     }
