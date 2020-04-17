@@ -1,26 +1,12 @@
-#include <fstream>
-#include <iostream>
-#include "hw4/token.hpp"
-#include "hw4/scanner.hpp"
+#include "grammar.cpp"
 
 int main() {
-  const std::string input = R"(C:\Development\university-tasks\homework-cpp\hw4\input.txt)";
-  const std::string output = R"(C:\Development\university-tasks\homework-cpp\hw4\output.txt)";
-  std::ifstream ifile(input);
-  std::ofstream ofile(output);
+    Grammar G = Grammar();
+    G.loadGrammar(std::ifstream("C:\\Development\\university-tasks\\homework-cpp\\hw11\\grammar.txt"));
 
-  Scanner scanner(ifile);
-  Token token;
-  do {
-    token = scanner.getNextToken();
-    std::cout << token << "\n";
-    if (token.getType() == LexemType::ERROR) {
-      std::cerr << "Error!";
+    for (const auto& nonTerminal : G.getNotTerminals()) {
+        std::cout << nonTerminal << " " << G.FOLLOW(nonTerminal);
     }
-  } while (token.getType() != LexemType::ERROR && token.getType() != LexemType::EOFF);
 
-  ifile.close();
-  ofile.close();
-
-  return 0;
+    return 0;
 }
