@@ -1,8 +1,8 @@
 #include <iostream>
+#include <utility>
 #include <vector>
 #include <set>
 #include <map>
-#include <utility>
 #include <algorithm>
 #include "grammar.h"
 
@@ -16,7 +16,7 @@ bool contains(const Container &c, const T &value) {
     return contains(c.begin(), c.end(), value);
 }
 
-std::set<std::string> calculateDiff(std::set<std::string> a, std::set<std::string> b) {
+std::set<std::string> calculateDiff(const std::set<std::string> &a, const std::set<std::string> &b) {
     std::set<std::string> diff;
     std::set_difference(a.begin(), a.end(), b.begin(),
                         b.end(),
@@ -24,22 +24,18 @@ std::set<std::string> calculateDiff(std::set<std::string> a, std::set<std::strin
     return diff;
 }
 
-bool hasDiff(std::set<std::string> a, std::set<std::string> b) {
+bool hasDiff(const std::set<std::string> &a, const std::set<std::string> &b) {
     return !calculateDiff(a, b).empty();
 }
 
-Grammar::Grammar() {
-    return;
-}
+Grammar::Grammar() = default;
 
-Grammar::~Grammar() {
-    return;
-}
+Grammar::~Grammar() = default;
 
-std::vector<std::string> split(std::string s, std::string delimiter) {
-    std::vector<std::string> items;
+std::vector<std::string> split(std::string s, const std::string &delimiter) {
     size_t pos = 0;
     std::string token;
+    std::vector<std::string> items;
     while ((pos = s.find(delimiter)) != std::string::npos) {
         token = s.substr(0, pos);
         items.push_back(token);
@@ -53,44 +49,38 @@ std::vector<std::string> split(std::string s, std::string delimiter) {
 bool Grammar::loadGrammar(std::ifstream stream) {
     std::string line;
     while (getline(stream, line)) {
-        const std::vector<std::string> splittedItems = split(line, " -> ");
-        const auto leftTerminal = splittedItems[0];
-        const auto rightTerminals = split(splittedItems[1], " ");
+        const std::vector<std::string> items = split(line, " -> ");
+
+        const auto leftTerminal = items[0];
+        const auto rightTerminals = split(items[1], " ");
+
         if (this->firstNonTerminal.empty()) {
             this->firstNonTerminal = leftTerminal;
         }
 
-        if (grammar.find(leftTerminal) != grammar.end()) {
-            grammar.at(leftTerminal).push_back(rightTerminals);
-        } else {
+        if (grammar.find(leftTerminal) == grammar.end()) {
             grammar.insert({leftTerminal, std::vector<std::vector<std::string>>{rightTerminals}});
+        } else {
+            grammar.at(leftTerminal).push_back(rightTerminals);
         }
     }
 
     auto it = grammar.begin();
     while (it != grammar.end()) {
-        std::string word = it->first;
-        auto rightGrammars = it->second;
-        for (const auto& s : rightGrammars) {
-            std::cout << word << " -> ";
-            for (const auto& _s : s) {
-                std::cout << _s << " ";
-
+        for (const auto &s : it->second) {
+            for (const auto &_s : s) {
                 if (grammar.find(_s) != grammar.end() && _s != "e") {
                     notTerminals.insert(_s);
                 }
             }
-            std::cout << "\n";
         }
         it++;
     }
 
-
     if (!initFIRSTWithTerminalsAndEpsilon()) return false;
     if (!initFIRSTWithNonTerminals()) return false;
-    if (!calculateFOLLOW()) return false;
 
-    return true;
+    return calculateFOLLOW();
 }
 
 std::ostream &operator<<(std::ostream &stream, const Grammar &g) {
@@ -99,11 +89,10 @@ std::ostream &operator<<(std::ostream &stream, const Grammar &g) {
 }
 
 bool Grammar::initFIRSTWithTerminalsAndEpsilon() {
-    for (const auto& _g : grammar) {
-        const auto rightPart = _g.second;
+    for (const auto &_g : grammar) {
         FIRSTForG.insert({_g.first, std::set<std::string>()});
-        for (const auto& r : rightPart) {
-            for (const auto& x : r) {
+        for (const auto &r : _g.second) {
+            for (const auto &x : r) {
                 if (notTerminals.find(x) == notTerminals.end()) {
                     FIRSTForG.insert({x, std::set<std::string>{x}});
                 }
@@ -127,7 +116,7 @@ void Grammar::printFIRST(std::ostream &stream) {
         auto key = it->first;
         auto strings = it->second;
 
-        for (auto s: strings) {
+        for (const auto &s: strings) {
             stream << key << " = [" << s << "]" << "\n";
         }
         it++;
@@ -148,26 +137,21 @@ std::set<std::string> Grammar::FIRST(const std::vector<std::string> &str) {
         }
     } else {
         auto index = 0;
-        for (const auto& t : str) {
+        for (const auto &t : str) {
             std::set<std::string> tempRes = FIRST(std::vector<std::string>{t});
 
-            for (const auto& _t : tempRes) {
+            for (const auto &_t : tempRes) {
                 if (_t != "e") {
                     result.insert({_t});
                 }
             }
 
-            const bool hasEpsilon = contains(tempRes, "e");
+            if (!contains(tempRes, "e")) {
+                break;
+            }
+
             if (++index == str.size()) {
-                if (hasEpsilon) {
-                    result.insert({"e"});
-                } else {
-                    break;
-                }
-            } else {
-                if (!hasEpsilon) {
-                    break;
-                }
+                result.insert({"e"});
             }
         }
     }
@@ -176,15 +160,13 @@ std::set<std::string> Grammar::FIRST(const std::vector<std::string> &str) {
 }
 
 bool Grammar::initFIRSTWithNonTerminals() {
-    for (const auto& g : grammar) {
+    for (const auto &g : grammar) {
         bool hasNewMember = false;
-
         for (auto &rule : g.second) {
-            for (const std::string& _first : FIRST(rule)) {
+            for (const std::string &_first : FIRST(rule)) {
                 hasNewMember = !contains(FIRSTForG[g.first], _first);
                 FIRSTForG[g.first].insert(_first);
             }
-
             if (!hasNewMember) {
                 break;
             }
@@ -195,19 +177,19 @@ bool Grammar::initFIRSTWithNonTerminals() {
 }
 
 bool Grammar::initFOLLOW() {
-    int index = 0;
-    for (const auto& _g : grammar) {
-        FOLLOWForG.insert({_g.first, std::set<std::string>()});
+    for (auto[it, index] = std::make_tuple(grammar.begin(), 0); it != grammar.end(); ++it, ++index) {
+        FOLLOWForG.insert({it->first, std::set<std::string>()});
+
         if (index == 0) {
             FOLLOWForG.insert({this->firstNonTerminal, std::set<std::string>{"$"}});
         }
-        ++index;
     }
+
     return true;
 }
 
 std::ostream &operator<<(std::ostream &stream, const std::set<std::string> &terminals) {
-    std::set<std::string>::iterator p = terminals.begin();
+    auto p = terminals.begin();
     stream << "[";
     while (p != terminals.end()) {
         stream << p->c_str();
@@ -219,7 +201,6 @@ std::ostream &operator<<(std::ostream &stream, const std::set<std::string> &term
     return stream;
 }
 
-
 bool Grammar::calculateFOLLOW() {
     initFOLLOW();
 
@@ -227,7 +208,7 @@ bool Grammar::calculateFOLLOW() {
     while (changed) {
         changed = false;
         for (auto const&[nonTerm, rules] : grammar) {
-            for (auto const& rule : rules) {
+            for (auto const &rule : rules) {
                 std::unordered_map<int, std::string> enumerated;
                 for (size_t i = 0; i < rule.size(); ++i) {
                     if (contains(this->notTerminals, rule.at(i))) {
