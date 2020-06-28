@@ -1,12 +1,9 @@
-#include "grammar.cpp"
+#include "grammar.h"
 
 int main() {
     Grammar G = Grammar();
-    G.loadGrammar(std::ifstream("C:\\Development\\university-tasks\\homework-cpp\\hw11\\grammar.txt"));
-
-    for (const auto& nonTerminal : G.getNotTerminals()) {
-        std::cout << nonTerminal << " " << G.FOLLOW(nonTerminal);
-    }
-
+    std::ifstream stream("./grammar.txt");
+    G.loadGrammar(stream);
+    G.buildSATable();
     return 0;
 }
